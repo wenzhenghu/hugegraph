@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.Future;
 
 import javax.ws.rs.core.UriBuilder;
 
@@ -74,6 +75,11 @@ public class RestServer {
                  .setCorePoolSize(maxWorkerThreads)
                  .setMaxPoolSize(maxWorkerThreads);
         return server;
+    }
+
+    public Future<HttpServer> shutdown() {
+        E.checkNotNull(this.httpServer, "http server");
+        return this.httpServer.shutdown();
     }
 
     public void shutdownNow() {
